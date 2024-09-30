@@ -1,0 +1,77 @@
+type CommentPayload = record {
+  by : text;
+  comment : text;
+  useremail : text;
+  project : text;
+};
+type CommentToProject = record {
+  by : text;
+  id : nat64;
+  created_at : nat64;
+  comment : text;
+  useremail : text;
+  project : text;
+};
+type DeleteProjectPayload = record { username : text; projectid : nat64 };
+type EnquireAboutProject = record {
+  by : text;
+  id : nat64;
+  usernamemail : text;
+  projectname : text;
+  created_at : nat64;
+  enquire : text;
+};
+type EnquirePayload = record {
+  by : text;
+  usernamemail : text;
+  projectname : text;
+  enquire : text;
+};
+type Project = record {
+  by : text;
+  id : nat64;
+  githublink : text;
+  projectname : text;
+  description : text;
+  created_at : nat64;
+  technologyused : text;
+};
+type ProjectPayload = record {
+  by : text;
+  githublink : text;
+  projectname : text;
+  description : text;
+  technologyused : text;
+};
+type Result = variant { Ok : text; Err : text };
+type Result_1 = variant { Ok : vec Project; Err : text };
+type Result_2 = variant { Ok : Project; Err : text };
+type Result_3 = variant { Ok : User; Err : text };
+type Result_4 = variant { Ok : CommentToProject; Err : text };
+type Result_5 = variant { Ok : EnquireAboutProject; Err : text };
+type SearchProjectPayload = record { projectid : nat64 };
+type UpdateProjectPayload = record {
+  by : text;
+  githublink : text;
+  projectname : text;
+  description : text;
+  projectid : nat64;
+  technologyused : text;
+};
+type User = record {
+  id : nat64;
+  username : text;
+  created_at : nat64;
+  useremail : text;
+};
+type UserPayload = record { username : text; useremail : text };
+service : {
+  delete_project : (DeleteProjectPayload) -> (Result);
+  get_all_projects : () -> (Result_1) query;
+  post_a_project : (ProjectPayload) -> (Result_2);
+  register_user : (UserPayload) -> (Result_3);
+  search_for_a_project : (SearchProjectPayload) -> (Result_2) query;
+  update_project_details : (UpdateProjectPayload) -> (Result_2);
+  users_commets_about_project : (CommentPayload) -> (Result_4);
+  users_enquire_about_a_project : (EnquirePayload) -> (Result_5);
+}
